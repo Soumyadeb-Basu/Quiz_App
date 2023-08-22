@@ -7,7 +7,6 @@ import com.soumya.quizapp.models.Question;
 import com.soumya.quizapp.models.QuestionForUser;
 import com.soumya.quizapp.models.Quiz;
 import com.soumya.quizapp.models.UserResponse;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +40,7 @@ public class QuizService {
 
     public ResponseEntity<List<QuestionForUser>> getQuestionsForUser(Integer id) {
 
-        Quiz quiz = new Quiz();
+        Quiz quiz;
         if(quizRepository.findById(id).isPresent())
             quiz= quizRepository.findById(id).get();
         else
