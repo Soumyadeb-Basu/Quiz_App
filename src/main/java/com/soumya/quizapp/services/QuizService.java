@@ -34,7 +34,7 @@ public class QuizService {
 
         quizRepository.save(quiz);
 
-        return new ResponseEntity<>("Created Quiz successfully!", HttpStatus.CREATED);
+        return new ResponseEntity<>("Created Quiz!", HttpStatus.CREATED);
 
     }
 

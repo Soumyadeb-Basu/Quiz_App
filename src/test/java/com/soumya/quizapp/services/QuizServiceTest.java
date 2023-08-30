@@ -24,6 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Test for QuizService")
 public class QuizServiceTest {
 
     @Mock
@@ -63,7 +64,7 @@ public class QuizServiceTest {
         quiz.setTitle("quiz1");
         quiz.setQuestions(quizQuestions);
 
-        ResponseEntity<String> response= new ResponseEntity<>("Created Quiz successfully!", HttpStatus.CREATED);
+        ResponseEntity<String> response= new ResponseEntity<>("Created Quiz!", HttpStatus.CREATED);
 
         Assertions.assertEquals(quizService.createQuiz("Programming", 1,"quiz1"),response);
 
