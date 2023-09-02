@@ -66,7 +66,7 @@ public class QuizServiceTest {
 
         ResponseEntity<String> response= new ResponseEntity<>("Created Quiz!", HttpStatus.CREATED);
 
-        Assertions.assertEquals(quizService.createQuiz("Programming", 1,"quiz1"),response);
+        Assertions.assertEquals(response,quizService.createQuiz("Programming", 1,"quiz1"));
 
         Mockito.verify(quizRepository).save(quiz);
 
@@ -81,7 +81,7 @@ public class QuizServiceTest {
 
         List<QuestionForUser> userQuestions= quizService.getQuestionsForUser(1).getBody();
         Assertions.assertNotNull(userQuestions);
-        Assertions.assertEquals(userQuestions.size(),1);
+        Assertions.assertEquals(1,userQuestions.size());
 
     }
 

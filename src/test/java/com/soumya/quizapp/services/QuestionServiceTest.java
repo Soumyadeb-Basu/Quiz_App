@@ -56,7 +56,7 @@ public class QuestionServiceTest {
 
         ResponseEntity<List<Question>> response = new ResponseEntity<>(questions, HttpStatus.OK);
 
-        Assertions.assertEquals(questionService.getAllQuestions(),response);
+        Assertions.assertEquals(response, questionService.getAllQuestions());
 
     }
 
@@ -65,7 +65,7 @@ public class QuestionServiceTest {
     void testAddQuestions() {
 
         ResponseEntity<String> response = new ResponseEntity<>("Successfully Added Question!", HttpStatus.CREATED);
-        Assertions.assertEquals(questionService.addQuestion(question),response);
+        Assertions.assertEquals(response,questionService.addQuestion(question));
         verify(questionRepository).save(question);
 
     }
@@ -74,8 +74,10 @@ public class QuestionServiceTest {
     @DisplayName("Testing Get Question By category")
     void testGetQuestionByCategory() {
 
+        questions.add(question);
+        when(questionRepository.getByCategory(category)).thenReturn(questions);
         ResponseEntity<List<Question>> responses = new ResponseEntity<>(questions,HttpStatus.OK);
-        Assertions.assertEquals(questionService.getByCategory(category), responses);
+        Assertions.assertEquals(responses, questionService.getByCategory(category));
 
     }
 }
