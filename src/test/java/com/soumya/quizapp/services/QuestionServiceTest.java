@@ -1,6 +1,6 @@
 package com.soumya.quizapp.services;
 
-import com.soumya.quizapp.Repositories.QuestionRepository;
+import com.soumya.quizapp.repositories.QuestionRepository;
 import com.soumya.quizapp.models.Question;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("QuestionServiceTest")
-public class QuestionServiceTest {
+class QuestionServiceTest {
 
     @Mock
     private QuestionRepository questionRepository;

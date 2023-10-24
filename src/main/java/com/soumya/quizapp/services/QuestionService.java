@@ -1,6 +1,6 @@
 package com.soumya.quizapp.services;
 
-import com.soumya.quizapp.Repositories.QuestionRepository;
+import com.soumya.quizapp.repositories.QuestionRepository;
 import com.soumya.quizapp.models.Question;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = QuestionController.class)
 @DisplayName("Testing Question Controller")
-public class QuestionControllerTest {
+class QuestionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

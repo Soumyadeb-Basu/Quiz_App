@@ -1,4 +1,4 @@
-package com.soumya.quizapp.Repositories;
+package com.soumya.quizapp.repositories;
 
 import com.soumya.quizapp.models.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;

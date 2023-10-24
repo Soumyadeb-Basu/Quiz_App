@@ -1,8 +1,8 @@
 package com.soumya.quizapp.services;
 
 
-import com.soumya.quizapp.Repositories.QuestionRepository;
-import com.soumya.quizapp.Repositories.QuizRepository;
+import com.soumya.quizapp.repositories.QuestionRepository;
+import com.soumya.quizapp.repositories.QuizRepository;
 import com.soumya.quizapp.models.Question;
 import com.soumya.quizapp.models.QuestionForUser;
 import com.soumya.quizapp.models.Quiz;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuizService {
@@ -41,8 +42,9 @@ public class QuizService {
     public ResponseEntity<List<QuestionForUser>> getQuestionsForUser(Integer id) {
 
         Quiz quiz;
-        if(quizRepository.findById(id).isPresent())
-            quiz= quizRepository.findById(id).get();
+        Optional<Quiz> optionalQuiz = quizRepository.findById(id);
+        if(optionalQuiz.isPresent())
+            quiz= optionalQuiz.get();
         else
             return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         List<Question> questions = quiz.getQuestions();
@@ -59,8 +61,9 @@ public class QuizService {
 
     public ResponseEntity<String> calculateResult(Integer id, List<UserResponse> response) {
         Quiz quiz= new Quiz();
-        if(quizRepository.findById(id).isPresent())
-            quiz = quizRepository.findById(id).get();
+        Optional<Quiz> optionalQuiz= quizRepository.findById(id);
+        if(optionalQuiz.isPresent())
+            quiz = optionalQuiz.get();
         List<Question> questions = quiz.getQuestions();
         int questionNumber = questions.size();
         int correctAnswers=0;

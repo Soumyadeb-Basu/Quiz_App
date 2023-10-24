@@ -1,7 +1,7 @@
 package com.soumya.quizapp.services;
 
-import com.soumya.quizapp.Repositories.QuestionRepository;
-import com.soumya.quizapp.Repositories.QuizRepository;
+import com.soumya.quizapp.repositories.QuestionRepository;
+import com.soumya.quizapp.repositories.QuizRepository;
 import com.soumya.quizapp.models.Question;
 import com.soumya.quizapp.models.QuestionForUser;
 import com.soumya.quizapp.models.Quiz;
@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Test for QuizService")
-public class QuizServiceTest {
+class QuizServiceTest {
 
     @Mock
     private QuizRepository quizRepository;
