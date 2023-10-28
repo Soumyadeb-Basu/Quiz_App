@@ -1,6 +1,7 @@
 package com.soumya.quizapp.services;
 
 
+import com.soumya.quizapp.exception.ResourceNotFoundException;
 import com.soumya.quizapp.repositories.QuestionRepository;
 import com.soumya.quizapp.repositories.QuizRepository;
 import com.soumya.quizapp.models.Question;
@@ -39,14 +40,14 @@ public class QuizService {
 
     }
 
-    public ResponseEntity<List<QuestionForUser>> getQuestionsForUser(Integer id) {
+    public ResponseEntity<List<QuestionForUser>> getQuestionsForUser(Integer id)throws ResourceNotFoundException {
 
         Quiz quiz;
         Optional<Quiz> optionalQuiz = quizRepository.findById(id);
         if(optionalQuiz.isPresent())
             quiz= optionalQuiz.get();
         else
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            throw new ResourceNotFoundException(HttpStatus.NOT_FOUND,"Quiz with the given Id not found");
         List<Question> questions = quiz.getQuestions();
         List<QuestionForUser> questionForUsers = new ArrayList<>();
 
@@ -59,16 +60,20 @@ public class QuizService {
 
     }
 
-    public ResponseEntity<String> calculateResult(Integer id, List<UserResponse> response) {
-        Quiz quiz= new Quiz();
+    public ResponseEntity<String> calculateResult(Integer id, List<UserResponse> response)throws ResourceNotFoundException {
+        Quiz quiz;
         Optional<Quiz> optionalQuiz= quizRepository.findById(id);
         if(optionalQuiz.isPresent())
             quiz = optionalQuiz.get();
+        else
+            throw new ResourceNotFoundException(HttpStatus.NOT_FOUND,"Response is invalid as Quiz with given ID not found");
         List<Question> questions = quiz.getQuestions();
         int questionNumber = questions.size();
         int correctAnswers=0;
         int count=0;
         for(UserResponse r: response) {
+            if(r.getResponse()==null||r.getResponse().isEmpty())
+                throw new ResourceNotFoundException(HttpStatus.BAD_REQUEST,"Response is empty");
             if(r.getResponse().equals(questions.get(count++).getRightAnswer()))
                 correctAnswers++;
         }

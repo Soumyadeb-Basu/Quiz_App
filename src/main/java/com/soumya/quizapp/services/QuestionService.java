@@ -1,5 +1,6 @@
 package com.soumya.quizapp.services;
 
+import com.soumya.quizapp.exception.ResourceNotFoundException;
 import com.soumya.quizapp.repositories.QuestionRepository;
 import com.soumya.quizapp.models.Question;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,27 +18,20 @@ public class QuestionService {
     @Autowired
     QuestionRepository questionRepository;
 
-    public ResponseEntity<List<Question>> getAllQuestions() {
-        List<Question> allQuestions = new ArrayList<>();
-        try {
-            allQuestions = questionRepository.findAll();
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
-        return ResponseEntity.ok(allQuestions);
+    public ResponseEntity<List<Question>> getAllQuestions()throws ResourceNotFoundException {
+        if(questionRepository.findAll().isEmpty())
+            throw new ResourceNotFoundException(HttpStatus.NOT_FOUND,"No Questions Found to be displayed");
+        return ResponseEntity.ok(questionRepository.findAll());
     }
 
     public ResponseEntity<String> addQuestion(Question question) {
-        try {
-            questionRepository.save(question);
-        } catch (Exception exc) {
-            log.info(exc.getMessage());
-            return new ResponseEntity<>("Error occurred", HttpStatus.BAD_REQUEST);
-        }
+        questionRepository.save(question);
         return new ResponseEntity<>("Successfully Added Question!", HttpStatus.CREATED);
     }
 
     public ResponseEntity<List<Question>> getByCategory(String category) {
+        if(questionRepository.getByCategory(category).isEmpty())
+            throw new ResourceNotFoundException(HttpStatus.NOT_FOUND,"No Questions are available for the given category: "+ category);
         return ResponseEntity.ok(questionRepository.getByCategory(category));
     }
 }

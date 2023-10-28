@@ -6,6 +6,7 @@ import com.soumya.quizapp.services.QuizService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class QuizController {
     @Operation(summary = "Create Quiz", description = "Creates a random quiz with user entering number of questions,quiz category and quiz title")
     @ApiResponse(responseCode = "201", description = "Created")
     @ApiResponse(responseCode = "400", description = "Bad Request")
-    public ResponseEntity<String> createQuiz(@PathVariable String category, @PathVariable int numberOfQuestions, @PathVariable String title) {
+    public ResponseEntity<String> createQuiz(@PathVariable String category, @PathVariable int numberOfQuestions,@Valid @PathVariable String title) {
          return quizService.createQuiz(category,numberOfQuestions,title);
     }
 
@@ -40,7 +41,7 @@ public class QuizController {
     @Operation(summary = "Get Quiz Response", description = "Gets the response in form of total number of correct questions attempted by user")
     @ApiResponse(responseCode = "200", description = "OK")
     @ApiResponse(responseCode = "404", description = "Not Found")
-    public ResponseEntity<String> submitQuiz(@PathVariable Integer id, @RequestBody List<UserResponse> response) {
+    public ResponseEntity<String> submitQuiz(@PathVariable Integer id,@Valid @RequestBody List<@Valid UserResponse> response) {
         return quizService.calculateResult(id,response);
     }
 }

@@ -5,6 +5,7 @@ import com.soumya.quizapp.services.QuestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class QuestionController {
     @Operation(summary = "Add Questions", description = "Adds a new question for User")
     @ApiResponse(responseCode = "201", description = "Created")
     @ApiResponse(responseCode = "400", description = "Bad Request")
-    public ResponseEntity<String> addQuestion(@RequestBody Question question) {
+    public ResponseEntity<String> addQuestion(@Valid @RequestBody Question question) {
         return questionService.addQuestion(question);
     }
 
