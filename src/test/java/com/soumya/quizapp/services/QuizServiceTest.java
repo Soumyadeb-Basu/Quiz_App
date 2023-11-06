@@ -1,5 +1,6 @@
 package com.soumya.quizapp.services;
 
+import com.soumya.quizapp.exception.ResourceNotFoundException;
 import com.soumya.quizapp.repositories.QuestionRepository;
 import com.soumya.quizapp.repositories.QuizRepository;
 import com.soumya.quizapp.models.Question;
@@ -18,10 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Test for QuizService")
@@ -98,6 +96,37 @@ class QuizServiceTest {
 
         ResponseEntity<String> responseForUser= quizService.calculateResult(1,responses);
         Assertions.assertTrue(Objects.requireNonNull(responseForUser.getBody()).contains("Correct Answers : 1"));
+
+    }
+
+    @Test
+    @DisplayName("Testing Get Questions for User: Exception Scenario")
+    void testGetQuestionsForUserException() {
+
+        Mockito.when(quizRepository.findById(1)).thenReturn(Optional.empty());
+        Assertions.assertThrows(ResourceNotFoundException.class, ()->quizService.getQuestionsForUser(1));
+
+    }
+
+    @Test
+    @DisplayName("Testing Calculate Result: No Quiz Found Exception Scenario")
+    void testCalculateResultNoQuizFound() {
+
+        Mockito.when(quizRepository.findById(1)).thenReturn(Optional.empty());
+        List<UserResponse> responses= new ArrayList<>();
+        Assertions.assertThrows(ResourceNotFoundException.class, ()->quizService.calculateResult(1,responses));
+
+    }
+
+    @Test
+    @DisplayName("Testing Calculate Result: Empty Response Exception Scenario")
+    void testCalculateResultEmptyResponse() {
+
+        quiz= new Quiz(1,"quiz3",quizQuestions);
+        Mockito.when(quizRepository.findById(1)).thenReturn(Optional.ofNullable(quiz));
+        UserResponse response= new UserResponse(1,null);
+        List<UserResponse> responses= Collections.singletonList(response);
+        Assertions.assertThrows(ResourceNotFoundException.class, ()->quizService.calculateResult(1,responses));
 
     }
 }

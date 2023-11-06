@@ -1,5 +1,6 @@
 package com.soumya.quizapp.services;
 
+import com.soumya.quizapp.exception.ResourceNotFoundException;
 import com.soumya.quizapp.repositories.QuestionRepository;
 import com.soumya.quizapp.models.Question;
 import org.junit.jupiter.api.Assertions;
@@ -78,6 +79,24 @@ class QuestionServiceTest {
         when(questionRepository.getByCategory(category)).thenReturn(questions);
         ResponseEntity<List<Question>> responses = new ResponseEntity<>(questions,HttpStatus.OK);
         Assertions.assertEquals(responses, questionService.getByCategory(category));
+
+    }
+
+    @Test
+    @DisplayName("Testing Get Question By category: Exception Scenario")
+    void testGetQuestionByCategoryException() {
+
+        when(questionRepository.getByCategory(category)).thenReturn(List.of());
+        Assertions.assertThrows(ResourceNotFoundException.class,()->questionService.getByCategory(category));
+
+    }
+
+    @Test
+    @DisplayName("Testing Get All Questions- Exception scenario")
+    void testGetAllQuestionsExceptionScenario() {
+
+        when(questionRepository.findAll()).thenReturn(List.of());
+        Assertions.assertThrows(ResourceNotFoundException.class,()->questionService.getAllQuestions());
 
     }
 }
