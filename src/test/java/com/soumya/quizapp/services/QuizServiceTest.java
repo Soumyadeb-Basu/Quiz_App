@@ -129,4 +129,27 @@ class QuizServiceTest {
         Assertions.assertThrows(ResourceNotFoundException.class, ()->quizService.calculateResult(1,responses));
 
     }
+
+    @Test
+    @DisplayName("Create Quiz : Exception Scenario")
+    void testCreateQuizException() {
+
+        quizQuestions= new ArrayList<>();
+        Mockito.when(questionRepository.findRandomQuestionsByCategory("Music",1)).thenReturn(quizQuestions);
+        Assertions.assertThrows(ResourceNotFoundException.class, ()->quizService.createQuiz("Music",1,"quiz2"));
+
+    }
+
+    @Test
+    @DisplayName("Quiz with No Questions: Exception Scenario")
+    void testQuizWithNoQuestionsException() {
+
+        quizQuestions= new ArrayList<>();
+        quiz= new Quiz(1,"emptyQuiz",quizQuestions);
+
+        Mockito.when(quizRepository.findById(1)).thenReturn(Optional.ofNullable(quiz));
+        Assertions.assertThrows(ResourceNotFoundException.class,()->quizService.getQuestionsForUser(1));
+
+    }
+
 }
