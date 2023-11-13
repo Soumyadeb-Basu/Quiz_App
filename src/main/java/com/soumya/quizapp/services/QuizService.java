@@ -22,11 +22,15 @@ import java.util.Optional;
 @Slf4j
 public class QuizService {
 
-    @Autowired
-    QuizRepository quizRepository;
+    private final QuizRepository quizRepository;
+
+    private final QuestionRepository questionRepository;
 
     @Autowired
-    QuestionRepository questionRepository;
+    public QuizService(QuizRepository quizRepository, QuestionRepository questionRepository) {
+        this.quizRepository= quizRepository;
+        this.questionRepository= questionRepository;
+    }
 
     public ResponseEntity<String> createQuiz(String category, int numberOfQuestions, String title) {
 

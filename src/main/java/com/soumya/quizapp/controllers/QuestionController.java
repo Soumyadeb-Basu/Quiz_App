@@ -17,8 +17,12 @@ import java.util.List;
 @Tag(name = "Question Controller", description = "Controller to manage Question service related operations")
 public class QuestionController {
 
+    private final QuestionService questionService;
+
     @Autowired
-    QuestionService questionService;
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("getAllQuestions")
     @Operation(summary = "Gets all Questions", description = "Gets all the questions for User")

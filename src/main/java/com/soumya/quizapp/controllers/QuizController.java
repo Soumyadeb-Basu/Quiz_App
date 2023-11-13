@@ -18,8 +18,12 @@ import java.util.List;
 @Tag(name = "Quiz Controller", description = "Controller to manage Quiz service related operations")
 public class QuizController {
 
+    private final QuizService quizService;
+
     @Autowired
-    QuizService quizService;
+    public QuizController(QuizService quizService) {
+        this.quizService= quizService;
+    }
 
     @PostMapping("create/{category}/{numberOfQuestions}/{title}")
     @Operation(summary = "Create Quiz", description = "Creates a random quiz with user entering number of questions,quiz category and quiz title")

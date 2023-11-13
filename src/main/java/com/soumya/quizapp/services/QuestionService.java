@@ -15,8 +15,12 @@ import java.util.List;
 @Slf4j
 public class QuestionService {
 
+    private final QuestionRepository questionRepository;
+
     @Autowired
-    QuestionRepository questionRepository;
+    public QuestionService(QuestionRepository questionRepository) {
+        this.questionRepository= questionRepository;
+    }
 
     public ResponseEntity<List<Question>> getAllQuestions()throws ResourceNotFoundException {
         if(questionRepository.findAll().isEmpty()) {
