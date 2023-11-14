@@ -27,6 +27,7 @@ public class QuestionService {
             log.error("No Questions found to be displayed....");
             throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "No Questions Found to be displayed");
         }
+        log.info("ALl Questions returned...");
         return ResponseEntity.ok(questionRepository.findAll());
     }
 
