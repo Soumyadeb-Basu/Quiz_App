@@ -2,9 +2,10 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/quizAppDB
-    username: postgres
-    password: 1234
+    #removing confidential information
+    url:
+    username:
+    password:
 
   jpa:
     hibernate:
