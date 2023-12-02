@@ -2,6 +2,7 @@ package com.soumya.quizapp.services;
 
 
 import com.soumya.quizapp.exception.ResourceNotFoundException;
+import com.soumya.quizapp.mapper.QuestionMapper;
 import com.soumya.quizapp.models.Question;
 import com.soumya.quizapp.models.QuestionForUser;
 import com.soumya.quizapp.models.Quiz;
@@ -46,7 +47,7 @@ public class QuizService {
         quiz.setQuestions(questions);
 
         quizRepository.save(quiz);
-        log.info("New Quiz created....");
+        log.info("New Quiz created with id: "+ quiz.getId());
 
         return new ResponseEntity<>("Created Quiz!", HttpStatus.CREATED);
 
@@ -70,7 +71,7 @@ public class QuizService {
         List<QuestionForUser> questionForUsers = new ArrayList<>();
 
         for(Question q: questions) {
-            QuestionForUser question = new QuestionForUser(q.getId(),q.getQuestionTitle(),q.getOption1(),q.getOption2(),q.getOption3(),q.getOption4());
+            QuestionForUser question= QuestionMapper.INSTANCE.questionForUser(q);
             questionForUsers.add(question);
         }
         log.info("User Question returned....");
